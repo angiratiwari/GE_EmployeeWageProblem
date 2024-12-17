@@ -5,6 +5,7 @@ public class EmployeeWageComputation {
     public static final int FULL_DAY_HOUR = 8;
     public static final int PART_TIME_HOUR = 4;
     public static final int WORKING_DAYS_PER_MONTH = 20;
+    public static final int MAX_WORKING_HOURS= 100;
     public static void main(String[] args) {
 
         System.out.println("Welcome to Employee Wage Computation Program!");
@@ -24,6 +25,8 @@ public class EmployeeWageComputation {
         // UC 5: Calculate Wages for a Month
         calculateMonthlyWages();
 
+        // UC 6: Calculate Wages till Condition is Reached
+        calculateWagesTillCondition();
     }
     // UC 1: Check Employee Attendance
     private static void checkEmployeeAttendance() {
@@ -78,6 +81,27 @@ public class EmployeeWageComputation {
         }
 
         System.out.println("Total Wage for the Month: " + totalWage);
+    }
+    // UC 6: Calculate Wages till Condition is Reached
+    private static void calculateWagesTillCondition() {
+        int totalHours = 0, totalDays = 0, totalWage = 0;
+
+        while (totalHours <= MAX_WORKING_HOURS && totalDays < WORKING_DAYS_PER_MONTH) {
+            totalDays++;
+            int empType = new Random().nextInt(3); // 0: Absent, 1: Full-Time, 2: Part-Time
+            int empHours = (empType == 1) ? FULL_DAY_HOUR : (empType == 2) ? PART_TIME_HOUR : 0;
+
+            totalHours += empHours;
+            totalWage += WAGE_PER_HOUR * empHours;
+
+            if (totalHours > MAX_WORKING_HOURS) {
+                break;
+            }
+        }
+
+        System.out.println("Total Working Days: " + totalDays);
+        System.out.println("Total Working Hours: " + totalHours);
+        System.out.println("Total Wage Earned: " + totalWage);
     }
 }
 
